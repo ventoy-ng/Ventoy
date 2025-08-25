@@ -1,21 +1,17 @@
 #!/bin/bash
 
-VT_GRUB_DIR=$PWD
+VT_GRUB_DIR="$PWD"
 
 rm -rf INSTALL
-rm -rf SRC
 rm -rf NBP
 rm -rf PXE
 
-mkdir SRC
 mkdir NBP
 mkdir PXE
 
-tar -xf grub-2.04.tar.xz -C ./SRC/
+pushd src > /dev/null || exit 1
 
-/bin/cp -a ./MOD_SRC/grub-2.04  ./SRC/
-
-cd ./SRC/grub-2.04
+./bootstrap
 
 
 # build for x86_64-efi
@@ -24,7 +20,7 @@ make distclean
 ./autogen.sh
 ./configure  --with-platform=efi --prefix=$VT_GRUB_DIR/INSTALL/
 make -j 16 || exit 1
-sh install.sh  uefi
+sh "$VT_GRUB_DIR/install.sh" uefi
 
 
 #build for i386-efi
@@ -33,7 +29,7 @@ make distclean
 ./autogen.sh
 ./configure --target=i386 --with-platform=efi  --prefix=$VT_GRUB_DIR/INSTALL/
 make -j 16 || exit 1
-sh install.sh  i386efi
+sh "$VT_GRUB_DIR/install.sh"  i386efi
 
 
 
@@ -52,7 +48,7 @@ TARGET_OBJCOPY=aarch64-linux-gnu-objcopy \
 TARGET_STRIP=aarch64-linux-gnu-strip TARGET_NM=aarch64-linux-gnu-nm \
 TARGET_RANLIB=aarch64-linux-gnu-ranlib
 make -j 16 || exit 1
-sh install.sh arm64
+sh "$VT_GRUB_DIR/install.sh" arm64
 
 
 #build for mips64el EFI
@@ -69,7 +65,7 @@ TARGET_OBJCOPY=mips-linux-gnu-objcopy \
 TARGET_STRIP=mips-linux-gnu-strip TARGET_NM=mips-linux-gnu-nm \
 TARGET_RANLIB=mips-linux-gnu-ranlib
 make -j 16 || exit 1
-sh install.sh mips64el
+sh "$VT_GRUB_DIR/install.sh" mips64el
 
 
 
@@ -79,9 +75,9 @@ make distclean
 ./autogen.sh
 ./configure --target=i386 --with-platform=pc --prefix=$VT_GRUB_DIR/INSTALL/
 make -j 16 || exit 1
-sh install.sh
+sh "$VT_GRUB_DIR/install.sh"
 
 
 
-cd ../../
+popd || exit 1
 

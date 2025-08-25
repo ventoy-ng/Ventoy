@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VT_DIR=$PWD/../../..
+VT_DIR="$PWD/../.."
 
 rm -rf $VT_DIR/GRUB2/INSTALL
 rm -rf $VT_DIR/GRUB2/PXE

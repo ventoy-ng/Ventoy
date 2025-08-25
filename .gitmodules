@@ -1,0 +1,4 @@
+[submodule "GRUB2/src"]
+	path = GRUB2/src
+	url = https://github.com/ventoy-ng/grub.git
+	shallow = true
