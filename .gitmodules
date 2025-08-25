@@ -2,3 +2,6 @@
 	path = GRUB2/src
 	url = https://github.com/ventoy-ng/grub.git
 	shallow = true
+[submodule "SQUASHFS/squashfs-tools-4.4"]
+	path = SQUASHFS/squashfs-tools-4.4
+	url = https://github.com/ventoy-ng/squashfs-tools.git
